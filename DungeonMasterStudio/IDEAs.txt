@@ -1,0 +1,8 @@
+﻿-Character backstories
+-Dice roller
+-Combat assistant
+----inititive tracker/ generator
+-Enemy Attack Input/Roller
+-Map Generator
+-Parties
+----send messages to individuals in the party and to everyone in the party (using signalr)

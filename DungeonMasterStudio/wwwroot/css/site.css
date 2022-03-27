@@ -20,6 +20,8 @@ body {
     background-color: darkred;
 }
 
-container {
+.background-container {
+    padding: 15px;
+    border-radius: 25px;
     background-color: ghostwhite;
 }
