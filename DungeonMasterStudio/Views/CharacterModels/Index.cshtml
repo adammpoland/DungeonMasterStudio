@@ -11,128 +11,24 @@
     <title>Index</title>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Class)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Level)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Race)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ArmorClass)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CurrentHitPoints)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaxHitPoints)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Strength)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dexterity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Constitution)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Intelligence)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Wisdom)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Charisma)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BackStory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Date)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Level)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Race)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age1)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ArmorClass)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CurrentHitPoints)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaxHitPoints)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Strength)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dexterity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Constitution)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Intelligence)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Wisdom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Charisma)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BackStory)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create New</a>
+    </p>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">@item.Name</h3>
+                        <p>@item.Date</p>
+                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID">Edit</a> 
+                        <a asp-action="Details" class="btn btn-warning" asp-route-id="@item.ID">Details</a> 
+                        <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.ID">Delete</a>   
+                    </div>
+                </div>         
+            </div>
+        }
+    </div>
 </body>
 </html>

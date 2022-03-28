@@ -11,6 +11,8 @@ namespace DungeonMasterStudio.Data
         {
         }
         public DbSet<CharacterModel> Characters { get; set; }
+        public DbSet<InventoryModel> InventoryItems { get; set; }
+
 
     }
 }
