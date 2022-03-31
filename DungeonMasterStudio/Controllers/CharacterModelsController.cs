@@ -51,10 +51,10 @@ namespace DungeonMasterStudio.Controllers
         public IActionResult Create()
         {
             Random rnd = new Random();
-            ViewData["Class"] = RandomLists.GetClasses()[rnd.Next(0, RandomLists.GetClasses().Count - 1)];
-            ViewData["Age"] = RandomLists.GetAges()[rnd.Next(0, RandomLists.GetAges().Count - 1)];
-            ViewData["Race"] = RandomLists.GetRaces()[rnd.Next(0, RandomLists.GetRaces().Count - 1)];
-            ViewData["Name"] = RandomLists.GetFirstNames()[rnd.Next(0, RandomLists.GetFirstNames().Count - 1)] +" "+ RandomLists.GetLastNames()[rnd.Next(0, RandomLists.GetLastNames().Count - 1)];
+            ViewData["Class"] = RandomLists.GetClasses()[rnd.Next(0, RandomLists.GetClasses().Count)];
+            ViewData["Age"] = RandomLists.GetAges()[rnd.Next(0, RandomLists.GetAges().Count)];
+            ViewData["Race"] = RandomLists.GetRaces()[rnd.Next(0, RandomLists.GetRaces().Count)];
+            ViewData["Name"] = RandomLists.GetFirstNames()[rnd.Next(0, RandomLists.GetFirstNames().Count)] +" "+ RandomLists.GetLastNames()[rnd.Next(0, RandomLists.GetLastNames().Count)];
 
             ViewData["Strength"] = GetModifier(GetAtribute()).ToString();
             ViewData["Dexterity"] = GetModifier(GetAtribute()).ToString();
