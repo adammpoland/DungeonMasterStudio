@@ -9,6 +9,7 @@ using DungeonMasterStudio.Data;
 using DungeonMasterStudio.Models;
 using Microsoft.AspNetCore.Identity;
 using DungeonMasterStudio.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DungeonMasterStudio.Controllers
 {
@@ -24,6 +25,7 @@ namespace DungeonMasterStudio.Controllers
         }
 
         // GET: CharacterModels
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Characters.Where(x => x.UserID == _userManager.GetUserId(HttpContext.User)).ToListAsync());
@@ -54,7 +56,7 @@ namespace DungeonMasterStudio.Controllers
             ViewData["Class"] = RandomLists.GetClasses()[rnd.Next(0, RandomLists.GetClasses().Count)];
             ViewData["Age"] = RandomLists.GetAges()[rnd.Next(0, RandomLists.GetAges().Count)];
             ViewData["Race"] = RandomLists.GetRaces()[rnd.Next(0, RandomLists.GetRaces().Count)];
-            ViewData["Name"] = RandomLists.GetFirstNames()[rnd.Next(0, RandomLists.GetFirstNames().Count)] +" "+ RandomLists.GetLastNames()[rnd.Next(0, RandomLists.GetLastNames().Count)];
+            ViewData["Name"] = RandomLists.GetFirstNames()[rnd.Next(0, RandomLists.GetFirstNames().Count)] +" "+ RandomLists.GetLastNames()[rnd.Next(0, RandomLists.GetLastNames().Count )];
 
             ViewData["Strength"] = GetModifier(GetAtribute()).ToString();
             ViewData["Dexterity"] = GetModifier(GetAtribute()).ToString();

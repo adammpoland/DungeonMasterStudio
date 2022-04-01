@@ -1,7 +1,6 @@
 ﻿@model DungeonMasterStudio.Models.CharacterModel
 
 @{
-    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -30,11 +29,7 @@
                 <input asp-for="Class" class="form-control" />
                 <span asp-validation-for="Class" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Level" class="control-label"></label>
-                <input asp-for="Level" class="form-control" />
-                <span asp-validation-for="Level" class="text-danger"></span>
-            </div>
+           
             <div class="form-group">
                 <label asp-for="Race" class="control-label"></label>
                 <input asp-for="Race" class="form-control" />
@@ -45,21 +40,7 @@
                 <input asp-for="Age1" class="form-control" />
                 <span asp-validation-for="Age1" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ArmorClass" class="control-label"></label>
-                <input asp-for="ArmorClass" class="form-control" />
-                <span asp-validation-for="ArmorClass" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CurrentHitPoints" class="control-label"></label>
-                <input asp-for="CurrentHitPoints" class="form-control" />
-                <span asp-validation-for="CurrentHitPoints" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MaxHitPoints" class="control-label"></label>
-                <input asp-for="MaxHitPoints" class="form-control" />
-                <span asp-validation-for="MaxHitPoints" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <label asp-for="Strength" class="control-label"></label>
                 <input asp-for="Strength" class="form-control" />
@@ -100,11 +81,7 @@
                 <input asp-for="Notes" class="form-control" />
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -113,7 +90,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
