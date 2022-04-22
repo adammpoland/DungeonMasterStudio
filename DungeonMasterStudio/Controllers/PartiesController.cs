@@ -87,16 +87,18 @@ namespace DungeonMasterStudio.Controllers
             if (party != null)
             {
                 party.Password = BCrypt.Net.BCrypt.HashPassword(party.Password);
+                party.Members = new List<ApplicationUser>();
+                party.Members.Add(_context.Users.Where(x => x.Id == _userManager.GetUserId(HttpContext.User)).FirstOrDefault());
                 _context.Add(party);
                 await _context.SaveChangesAsync();
                 //Member partyMember = new Member();
                 //partyMember.UserId = _userManager.GetUserId(HttpContext.User);
                 //_context.Add(partyMember);
                 await _context.SaveChangesAsync();
-                Party p = await _context.Parties.Where(x => x.PartyID == x.PartyID).FirstOrDefaultAsync();
-                
-                p.Members.Add( _context.Users.Where(x => x.Id == _userManager.GetUserId(HttpContext.User)).FirstOrDefault());
-                _context.Update(p);
+                //Party p = await _context.Parties.Where(x => x.PartyID == x.PartyID).FirstOrDefaultAsync();
+               
+                //_context.Update(p);
+                //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(party);
@@ -109,21 +111,18 @@ namespace DungeonMasterStudio.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddUserToParty(int PartyID, string Password )
+        public async Task<IActionResult> AddUserToParty(string PartyName, string Password )
         {
 
 
-            if (PartyID != 0 && !string.IsNullOrEmpty(Password))
+            if (!string.IsNullOrEmpty(PartyName) && !string.IsNullOrEmpty(Password))
             {
-                Party party = await _context.Parties.Where(x => x.PartyID == x.PartyID).FirstOrDefaultAsync();
+                Party party = await _context.Parties.Where(x => x.Name == PartyName).FirstOrDefaultAsync();
                 if (!party.Equals(null))
                 {
                     if (BCrypt.Net.BCrypt.Verify(Password,party.Password))
                     {
-                        //Member partyMember = new Member();
-
-                        //partyMember.UserId = _userManager.GetUserId(HttpContext.User);
-
+                        party.Members = new List<ApplicationUser>();
                         party.Members.Add(_context.Users.Where(x => x.Id == _userManager.GetUserId(HttpContext.User)).FirstOrDefault());
                         _context.Update(party);
                         await _context.SaveChangesAsync();
@@ -132,12 +131,14 @@ namespace DungeonMasterStudio.Controllers
                 }
                 
             }
-            return View();
+            return View("JoinParty");
         }
 
-        public async Task<IActionResult> PartyRoom()
+        [Route("/Parties/PartyRoom/{PartyID}")]
+        public async Task<IActionResult> PartyRoom(int PartyID)
         {
-            return View();
+            Party party = await _context.Parties.Where(p => p.PartyID == PartyID).Include(p=>p.Members).FirstOrDefaultAsync();
+            return View(party);
         }
 
         // GET: Parties/Edit/5
