@@ -13,7 +13,7 @@ namespace DungeonMasterStudio.Hubs
         {
             _context = context;
         }
-        public void SendChatMessage(string who, string message, string fileData)
+        async public void SendChatMessage(string who, string message)
         {
             var name = Context.User.Identity.Name;
 
@@ -39,25 +39,38 @@ namespace DungeonMasterStudio.Hubs
                 {
                     foreach (var connection in user.Connections)
                     {
-                        Clients.Client(connection.ConnectionID).SendAsync("ReceiveMessage", Context.User.Identity.Name, message, fileData);
+                        Clients.Client(connection.ConnectionID).SendAsync("ReceiveMessage", Context.User.Identity.Name, message);
                     }
                 }
             }
         }
 
-        public async Task AddToGroup(string groupName)
+        public async void SendChatMessageToAll(string partyName, string message)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-            await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has joined the group {groupName}.");
+            await Clients.Group(partyName).SendAsync("ReceiveMessage", Context.User.Identity.Name, message);
         }
 
-        public async Task RemoveFromGroup(string groupName)
+        public async void JoinGroup(string partyName)
         {
-            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+            await Groups.AddToGroupAsync(Context.ConnectionId, partyName);
 
-            await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
         }
+
+
+        //public async Task AddToGroup(string groupName)
+        //{
+        //    await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+
+        //    await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has joined the group {groupName}.");
+        //}
+
+        //public async Task RemoveFromGroup(string groupName)
+        //{
+        //    await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+
+        //    await Clients.Group(groupName).SendAsync("Send", $"{Context.ConnectionId} has left the group {groupName}.");
+        //}
 
         //public void AttackEnemy(string enemyID, string message)
         //{
@@ -121,7 +134,7 @@ namespace DungeonMasterStudio.Hubs
 
             ApplicationUser partyMember = _context.Users.Where(x => x.Id == user.Id).FirstOrDefault();
             Party party = _context.Parties.Where(x => x.Members.Contains(partyMember)).FirstOrDefault();
-            AddToGroup(party.PartyID.ToString());   
+            JoinGroup(party.Name);   
             return base.OnConnectedAsync();
         }
 
