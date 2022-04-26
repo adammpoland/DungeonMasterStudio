@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@{
+    ViewData["Title"] = "JoinParty";
+}
+
+<h1>JoinParty</h1>
+
+<div class="container">
+    <form asp-action="AddUserToParty">
+        <div class="form-group">
+                <label for="PartyName" class="control-label"></label>
+                <input id="PartyName" name="PartyName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Password" class="control-label"></label>
+                <input id="Password" name="Password" type="password" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+    </form>
+</div>
+
