@@ -39,7 +39,7 @@ namespace DungeonMasterStudio.Hubs
                 {
                     foreach (var connection in user.Connections)
                     {
-                        Clients.Client(connection.ConnectionID).SendAsync("ReceiveMessage", Context.User.Identity.Name, message);
+                        Clients.Client(connection.ConnectionID).SendAsync("ReceiveMessage", Context.User.Identity.Name.ToString(), message.ToString());
                     }
                 }
             }
@@ -47,8 +47,7 @@ namespace DungeonMasterStudio.Hubs
 
         public async void SendChatMessageToAll(string partyName, string message)
         {
-
-            await Clients.Group(partyName).SendAsync("ReceiveMessage", Context.User.Identity.Name, message);
+            await Clients.Group(partyName).SendAsync("ReceiveMessage", Context.User.Identity.Name.ToString(), message.ToString());
         }
 
         public async void JoinGroup(string partyName)
