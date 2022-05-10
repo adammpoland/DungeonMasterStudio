@@ -5,7 +5,7 @@ var imageData;
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 
-connection.on("ReceiveMessage", function (user, message) {
+connection.on("ReceiveMessage", function (user, message, fileData) {
 
     var p = document.createElement("p");
     document.getElementById("messages").appendChild(p);
@@ -14,7 +14,11 @@ connection.on("ReceiveMessage", function (user, message) {
     // should be aware of possible script injection concerns.
     console.log(user + " " + message)
     p.textContent = `(${user}) ${message}`;
-    //getBase64(dataURLtoFile(fileData));
+    if (fileData !== "")
+    {
+        getBase64(dataURLtoFile(fileData));
+    }
+    
 });
 
 
@@ -46,20 +50,27 @@ connection.start().then(function () {
 
 
 document.getElementById("sendButton").addEventListener("click", function (event) {
+    event.preventDefault();
+
     var chkAll = document.getElementById("All")
     var PartyName = document.getElementById("PartyName")
    
-    if (chkAll.checked) {
+    if (chkAll.checked)
+    {
         var message = document.getElementById("messageInput").value;
         var p = document.createElement("p");
         p.textContent = ` ${message}`;
         document.getElementById("messages").appendChild(p);
-        console.log(message)
-        console.log(PartyName)
-        connection.invoke("SendChatMessageToAll", PartyName.value, message).catch(function (err) {
+        const file = document.querySelector('#fileInput').files[0];
+        if (file !== "") {
+            getBase64(file);
+        }
+        connection.invoke("SendChatMessageToAll", PartyName.value, message, imageData).catch(function (err) {
             return console.error(err.toString());
         });
-    } else {
+    }
+    else
+    {
         var form = this.form;
         var cbs = Array.from(form.querySelectorAll('input[type="checkbox"]:checked'));
         var ids = cbs.map(function (cb) { return cb.id });
@@ -71,13 +82,16 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         document.getElementById("messages").appendChild(p);
         p.textContent = ` ${message}`;
 
-        //const file = document.querySelector('#fileInput').files[0];
-        //getBase64(file);
+        const file = document.querySelector('#fileInput').files[0];
+        if (file !== "") {
+            getBase64(file);
+        }
+        
         ids.forEach(function (id) {
             console.log(id.toString())
             console.log(id.value)
             console.log(id.id)
-            connection.invoke("SendChatMessage", id.toString(), message).catch(function (err) {
+            connection.invoke("SendChatMessage", id.toString(), message, imageData).catch(function (err) {
                 return console.error(err.toString());
             });
         })
@@ -88,23 +102,23 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 });
 
 
-//function getBase64(file) {
-//    return new Promise((resolve, reject) => {
-//        var reader = new FileReader();
-//        reader.readAsDataURL(file)
-//        reader.onload = function () {
-//            resolve(reader.resolve);
-//            console.log(reader.result);
-//            var img = document.createElement("img");
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        var reader = new FileReader();
+        reader.readAsDataURL(file)
+        reader.onload = function () {
+            resolve(reader.resolve);
+            console.log(reader.result);
+            var img = document.createElement("img");
 
-//            img.setAttribute("src", reader.result)
-//            console.log(img)
-//            document.getElementById("messages").appendChild(img);
-//            imageData = reader.result;
+            img.setAttribute("src", reader.result)
+            console.log(img)
+            document.getElementById("messages").appendChild(img);
+            imageData = reader.result;
 
-//        };
-//        reader.onerror = function (error) {
-//            console.log('Error: ', error);
-//        };
-//    });
-//}
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    });
+}

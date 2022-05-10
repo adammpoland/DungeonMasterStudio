@@ -13,7 +13,7 @@ namespace DungeonMasterStudio.Hubs
         {
             _context = context;
         }
-        async public void SendChatMessage(string who, string message)
+        async public void SendChatMessage(string who, string message, string fileData)
         {
             var name = Context.User.Identity.Name;
 
@@ -39,15 +39,15 @@ namespace DungeonMasterStudio.Hubs
                 {
                     foreach (var connection in user.Connections)
                     {
-                        Clients.Client(connection.ConnectionID).SendAsync("ReceiveMessage", Context.User.Identity.Name.ToString(), message.ToString());
+                        Clients.Client(connection.ConnectionID).SendAsync("ReceiveMessage", Context.User.Identity.Name.ToString(), message.ToString(), fileData);
                     }
                 }
             }
         }
 
-        public async void SendChatMessageToAll(string partyName, string message)
+        public async void SendChatMessageToAll(string partyName, string message, string fileData)
         {
-            await Clients.Group(partyName).SendAsync("ReceiveMessage", Context.User.Identity.Name.ToString(), message.ToString());
+            await Clients.Group(partyName).SendAsync("ReceiveMessage", Context.User.Identity.Name.ToString(), message.ToString(), fileData);
         }
 
         public async void JoinGroup(string partyName)

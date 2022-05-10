@@ -94,7 +94,7 @@ namespace DungeonMasterStudio.Controllers
                 //Member partyMember = new Member();
                 //partyMember.UserId = _userManager.GetUserId(HttpContext.User);
                 //_context.Add(partyMember);
-                await _context.SaveChangesAsync();
+                //await _context.SaveChangesAsync();
                 //Party p = await _context.Parties.Where(x => x.PartyID == x.PartyID).FirstOrDefaultAsync();
                
                 //_context.Update(p);
